@@ -24,7 +24,6 @@ lcd = character_lcd.Character_LCD_Mono(
     lcd_d7,
     lcd_columns,
     lcd_rows,
-    lcd_backlight
 )
 # lcd = character_lcd.Character_LCD()
 
