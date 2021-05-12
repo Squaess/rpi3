@@ -45,6 +45,7 @@ try:
 
         upper_row = " ".join([location, temp, f"Humidity: {hum}", f"Preassure: {pres} "])
         lower_row = " ".join([act_time, weather_cond_out, f"Wind: {wind}", f"Sunset: {sunset} "])
+        print(upper_row+"\n"+lower_row)
 
         lcd.clear()
         lcd.message = upper_row+"\n"+lower_row
