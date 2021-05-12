@@ -39,7 +39,7 @@ weather_cond_cmd = r'''curl wttr.in/Wroclaw?format="%C\n"'''
 try:
     while True:
         weather_out = run_command(weather_cmd)
-        weather_cond_out = run_command(weather_cond_cmd).decode()
+        weather_cond_out = run_command(weather_cond_cmd).decode().strip()
         act_time = datetime.now().strftime('%b %d  %H:%M:%S')
         location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
 
