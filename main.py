@@ -34,6 +34,15 @@ lcd = character_lcd.Character_LCD_Mono(
 def run_command(cmd):
     return check_output(cmd, shell=True)
 
+def print_and_move(msg):
+    n = max([len(i) for i in msg.split("\n")])
+    lcd.clear()
+    lcd.message = msg
+    for i in range(n):
+        time.sleep(0.5)
+        lcd.move_left()
+
+
 weather_cmd  = r'''curl wttr.in/Wroclaw?format="%l+%t+%h+%w+%P+%s\n"'''
 weather_cond_cmd = r'''curl wttr.in/Wroclaw?format="%C\n"'''
 try:
@@ -42,15 +51,11 @@ try:
         weather_cond_out = run_command(weather_cond_cmd).decode().strip()
         act_time = datetime.now().strftime('%b %d  %H:%M:%S')
         location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
-
-        upper_row = " ".join([location, temp, f"Humidity: {hum}", f"Preassure: {pres}", f"Sunset: {sunset} "])
-        lower_row = " ".join([act_time, weather_cond_out, f"Wind: {wind} "])
-        print(upper_row+"\n"+lower_row)
-
-        lcd.clear()
-        lcd.message = upper_row+"\n"+lower_row
-        for i in range(120):
-            time.sleep(0.5)
-            lcd.move_left()
+        for i in range(3):
+            upper_row = " ".join([location, temp])
+            lower_row = " ".join([act_time, weather_cond_out])
+            print_and_move(upper_row+"\n"+lower_row)
+            print_and_move(f"Humidity: {hum}\nPreassure: {pres}")
+            print_and_move(f"Wind: {wind}\nSunset: {sunset}")
 finally:
     lcd.clear()
