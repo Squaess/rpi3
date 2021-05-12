@@ -1,5 +1,6 @@
 from subprocess import check_output
 import time
+from datetime import datetime
 import board
 import digitalio
 import adafruit_character_lcd.character_lcd as character_lcd
@@ -33,17 +34,24 @@ lcd = character_lcd.Character_LCD_Mono(
 def run_command(cmd):
     return check_output(cmd, shell=True)
 
-weather_cmd  = r'''curl wttr.in/Wroclaw?format="%l+%T+%t+%h+%w+%P+%s\n"'''
-wather_cond_cmd = r'''curl wttr.in/Wroclaw?format="%C\n"'''
+weather_cmd  = r'''curl wttr.in/Wroclaw?format="%l+%t+%h+%w+%P+%s\n"'''
+weather_cond_cmd = r'''curl wttr.in/Wroclaw?format="%C\n"'''
 
 counter = 0
 while counter < 100:
-    lcd.clear()
     weather_out = run_command(weather_cmd)
-    location, act_time, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
-    lcd.message = location
-    for i in range(len(weather_out)):
-        time.sleep(0.5)
+    weather_cond_out = run_command(weather_cond_cmd).decode()
+    act_time = datetime.now().strftime('%b %d  %H:%M:%S\n')
+    location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
+
+    upper_row = " ".join([location, temp, f"Humidity: {hum}", f"Preassure: {pres}"])
+    lower_row = " ".join([act_time, weather_cond_out, f"Wind: {wind}", f"Sunset: {sunset}"])
+
+    n_moves = max(len(upper_row), len(lower_row))
+    lcd.clear()
+    lcd.message = upper_row+"\n"+lower_row
+    for i in range(n_moves):
+        time.sleep(0.3)
         lcd.move_left
     counter += 1
 
