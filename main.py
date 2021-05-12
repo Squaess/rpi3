@@ -43,8 +43,8 @@ try:
         act_time = datetime.now().strftime('%b %d  %H:%M:%S')
         location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
 
-        upper_row = " ".join([location, temp, f"Humidity: {hum}", f"Preassure: {pres} "])
-        lower_row = " ".join([act_time, weather_cond_out, f"Wind: {wind}", f"Sunset: {sunset} "])
+        upper_row = " ".join([location, temp, f"Humidity: {hum}", f"Preassure: {pres}", f"Sunset: {sunset} "])
+        lower_row = " ".join([act_time, weather_cond_out, f"Wind: {wind} "])
         print(upper_row+"\n"+lower_row)
 
         lcd.clear()
