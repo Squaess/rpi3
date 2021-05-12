@@ -1,4 +1,4 @@
-from subprocess import PIPE, Popen
+from subprocess import check_output
 import time
 import board
 import digitalio
@@ -31,17 +31,16 @@ lcd = character_lcd.Character_LCD_Mono(
 )
 
 def run_command(cmd):
-    p = Popen(cmd, shell=True, stdout=PIPE)
-    output = p.communicate()[0]
-    return output
+    return check_output(cmd, shell=True)
 
-weather_cmd  = r'''curl wttr.in/Wroclaw?format="%l+%T+%C+%t+%h+%w+%P+%s\n"'''
+weather_cmd  = r'''curl wttr.in/Wroclaw?format="%l+%T+%t+%h+%w+%P+%s\n"'''
 wather_cond_cmd = r'''curl wttr.in/Wroclaw?format="%C\n"'''
 
 counter = 0
 while counter < 100:
     lcd.clear()
     weather_out = run_command(weather_cmd)
+    location, act_time, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
     lcd.message = weather_out
     for i in range(len(weather_out)):
         time.sleep(0.5)
