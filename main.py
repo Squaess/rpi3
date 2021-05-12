@@ -41,7 +41,7 @@ while counter < 100:
     lcd.clear()
     weather_out = run_command(weather_cmd)
     location, act_time, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
-    lcd.message = weather_out
+    lcd.message = weather_out[:16]
     for i in range(len(weather_out)):
         time.sleep(0.5)
         lcd.move_left
