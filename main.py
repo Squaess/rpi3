@@ -44,6 +44,6 @@ time.sleep(4)
 print("Clearing lcd")
 lcd.clear()
 print("Printing Dupa")
-lcd.message("Dupa")
+lcd.message = "Dupa"
 print("Sleeping")
 time.sleep(4)
