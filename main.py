@@ -41,7 +41,7 @@ counter = 0
 while counter < 100:
     weather_out = run_command(weather_cmd)
     weather_cond_out = run_command(weather_cond_cmd).decode()
-    act_time = datetime.now().strftime('%b %d  %H:%M:%S\n')
+    act_time = datetime.now().strftime('%b %d  %H:%M:%S')
     location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
 
     upper_row = " ".join([location, temp, f"Humidity: {hum}", f"Preassure: {pres}"])
@@ -52,7 +52,7 @@ while counter < 100:
     lcd.message = upper_row+"\n"+lower_row
     for i in range(n_moves):
         time.sleep(0.3)
-        lcd.move_left
+        lcd.move_left()
     counter += 1
 
 lcd.clear()
