@@ -3,13 +3,14 @@ import time
 import digitalio
 import adafruit_character_lcd.character_lcd as character_lcd
 
-lcd_rs = digitalio.DigitalInOut(board.D7)
-lcd_en = digitalio.DigitalInOut(board.D8)
-lcd_d7 = digitalio.DigitalInOut(board.D12)
-lcd_d6 = digitalio.DigitalInOut(board.D11)
-lcd_d5 = digitalio.DigitalInOut(board.D10)
-lcd_d4 = digitalio.DigitalInOut(board.D9)
-lcd_backlight = digitalio.DigitalInOut(board.D13)
+
+lcd_rs = 25
+lcd_en = 24
+lcd_d7 = 22
+lcd_d6 = 18
+lcd_d5 = 17
+lcd_d4 = 23
+lcd_backlight = 2
 
 lcd_columns = 16
 lcd_rows = 2
