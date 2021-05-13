@@ -41,7 +41,7 @@ def print_and_move(msg):
     lcd.message = msg
     time.sleep(5)
     for i in range(n - lcd_columns):
-        time.sleep(0.5)
+        time.sleep(1)
         lcd.move_left()
 
 
