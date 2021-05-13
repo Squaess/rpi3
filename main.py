@@ -39,7 +39,8 @@ def print_and_move(msg):
     n = max([len(i) for i in msg.split("\n")])
     lcd.clear()
     lcd.message = msg
-    for i in range(n):
+    time.sleep(5)
+    for i in range(n - lcd_columns):
         time.sleep(0.5)
         lcd.move_left()
 
