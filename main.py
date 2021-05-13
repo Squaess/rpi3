@@ -1,4 +1,5 @@
 from subprocess import check_output
+import subprocess
 import time
 from datetime import datetime
 import board
@@ -47,15 +48,19 @@ weather_cmd  = r'''curl wttr.in/Wroclaw?format="%l+%t+%h+%w+%P+%s\n"'''
 weather_cond_cmd = r'''curl wttr.in/Wroclaw?format="%C\n"'''
 try:
     while True:
-        weather_out = run_command(weather_cmd)
-        weather_cond_out = run_command(weather_cond_cmd).decode().strip()
-        act_time = datetime.now().strftime('%b %d  %H:%M:%S')
-        location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
-        for i in range(3):
-            upper_row = " ".join([location, temp])
-            lower_row = " ".join([act_time, weather_cond_out])
-            print_and_move(upper_row+"\n"+lower_row)
-            print_and_move(f"Humidity: {hum}\nPreassure: {pres}")
-            print_and_move(f"Wind: {wind}\nSunset: {sunset}")
+        try:
+            weather_out = run_command(weather_cmd)
+            weather_cond_out = run_command(weather_cond_cmd).decode().strip()
+        except subprocess.CalledProcessError as e:
+            print_and_move("<-- Booting raspberry ... :)")
+        else:
+            location, temp, hum, wind, pres, sunset = [i.decode() for i in weather_out.split()]
+            act_time = datetime.now().strftime('%b %d  %H:%M:%S')
+            for i in range(3):
+                upper_row = " ".join([location, temp])
+                lower_row = " ".join([act_time, weather_cond_out])
+                print_and_move(upper_row+"\n"+lower_row)
+                print_and_move(f"Humidity: {hum}\nPreassure: {pres}")
+                print_and_move(f"Wind: {wind}\nSunset: {sunset}")
 finally:
     lcd.clear()
