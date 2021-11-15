@@ -1,0 +1,10 @@
+ [Unit]
+ Description=Service for disaplying weather information on lcd screen
+ After=multi-user.target
+
+ [Service]
+ Type=idle
+ ExecStart=/home/pi/Documents/rpi3/venv/bin/python /home/pi/Documents/rpi3/main.py
+
+ [Install]
+ WantedBy=multi-user.target
